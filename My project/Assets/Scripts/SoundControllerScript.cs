@@ -20,11 +20,11 @@ public class SoundControllerScript : MonoBehaviour
         {
             if (isPlaying)
             {
-                audioSource.Stop();
+                audioSource.Pause(); 
             }
             else
             {
-                audioSource.Play();
+                audioSource.UnPause();
             }
             isPlaying = !isPlaying;
         }
