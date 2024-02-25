@@ -344,6 +344,7 @@
 -r:"Library/Bee/artifacts/200b0aE.dag/UnityEngine.UI.ref.dll"
 "Assets/Scripts/MovableObjectScript.cs"
 "Assets/Scripts/ObjectControllerScript.cs"
+"Assets/Scripts/SoundControllerScript.cs"
 "Assets/Scripts/SpawnerObjectScript.cs"
 -langversion:9.0
 
