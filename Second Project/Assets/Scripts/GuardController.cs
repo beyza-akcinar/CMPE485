@@ -7,6 +7,7 @@ public class GuardController : MonoBehaviour
     public float moveSpeed = 1f; // Speed at which the guard moves
     public float rotationSpeed = 5f; // Speed at which the guard rotates
 	private GameManager gameManager; // Reference to the GameManager
+	public UIManager uiManager;
 
     private int currentWaypointIndex = 0; // Index of the current waypoint
     private bool isMoving = true; // Flag to control guard movement
@@ -72,7 +73,7 @@ public class GuardController : MonoBehaviour
         if (collision.collider.CompareTag("Player"))
         {
             // Game over scenario for collision with the player
-            gameManager.EndGame();
+            uiManager.ShowCanvas();
             // Implement your game over logic here, such as showing a game over screen or resetting the level
         }
     }
