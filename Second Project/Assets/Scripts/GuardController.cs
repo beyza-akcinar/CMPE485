@@ -6,6 +6,7 @@ public class GuardController : MonoBehaviour
     public Transform[] waypoints; // Waypoints defining the path for the guard
     public float moveSpeed = 1f; // Speed at which the guard moves
     public float rotationSpeed = 5f; // Speed at which the guard rotates
+	private GameManager gameManager; // Reference to the GameManager
 
     private int currentWaypointIndex = 0; // Index of the current waypoint
     private bool isMoving = true; // Flag to control guard movement
@@ -15,6 +16,7 @@ public class GuardController : MonoBehaviour
     {
         // Start the guard coroutine
         StartCoroutine(MoveGuard());
+		gameManager = FindObjectOfType<GameManager>(); // Find the GameManager in the scene
     }
 
     IEnumerator MoveGuard()
@@ -61,6 +63,17 @@ public class GuardController : MonoBehaviour
             }
 
             yield return null;
+        }
+    }
+
+    // Check for collisions with the player
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+        {
+            // Game over scenario for collision with the player
+            gameManager.EndGame();
+            // Implement your game over logic here, such as showing a game over screen or resetting the level
         }
     }
 }
