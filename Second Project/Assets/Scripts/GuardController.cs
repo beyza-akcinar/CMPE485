@@ -12,12 +12,15 @@ public class GuardController : MonoBehaviour
     private int currentWaypointIndex = 0; // Index of the current waypoint
     private bool isMoving = true; // Flag to control guard movement
     private bool movingForward = true; // Flag to indicate the direction of movement
+	private Animator guardAnimator;
 
     void Start()
     {
         // Start the guard coroutine
         StartCoroutine(MoveGuard());
 		gameManager = FindObjectOfType<GameManager>(); // Find the GameManager in the scene
+		guardAnimator = GetComponent<Animator>();
+		guardAnimator.SetBool("isGameOver", false);
     }
 
     IEnumerator MoveGuard()
@@ -73,6 +76,15 @@ public class GuardController : MonoBehaviour
         if (collision.collider.CompareTag("Player"))
         {
             // Game over scenario for collision with the player
+			guardAnimator.SetBool("isGameOver", true);
+            uiManager.ShowCanvas();
+            // Implement your game over logic here, such as showing a game over screen or resetting the level
+        }
+
+		if (collision.collider.CompareTag("Key"))
+        {
+            // Game over scenario for collision with the player
+			guardAnimator.SetBool("isGameOver", true);
             uiManager.ShowCanvas();
             // Implement your game over logic here, such as showing a game over screen or resetting the level
         }

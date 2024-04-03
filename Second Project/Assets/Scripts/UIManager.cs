@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
 
     public void OnYesButtonClicked()
     {
+        Time.timeScale = 1f; // Resume the game
         GameManager.Instance.EndGame(); // Call the EndGame method in GameManager
     }
 
@@ -22,6 +23,7 @@ public class UIManager : MonoBehaviour
         if (canvas != null)
         {
             canvas.SetActive(true); // Activate the canvas
+            Time.timeScale = 0f; // Pause the game
         }
         else
         {
@@ -35,6 +37,7 @@ public class UIManager : MonoBehaviour
         if (canvas != null)
         {
             canvas.SetActive(false); // Deactivate the canvas
+            Time.timeScale = 1f; // Resume the game
         }
         else
         {
