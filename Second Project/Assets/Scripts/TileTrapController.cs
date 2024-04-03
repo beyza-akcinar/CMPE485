@@ -1,16 +1,17 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
 public class TileTrapController : MonoBehaviour
 {
     public Transform[] tiles; // Array to hold references to tile transforms
-    public float descendSpeed = 1f; // Speed at which tiles descend
-    public float riseSpeed = 1f; // Speed at which tiles rise back
+    public float descendSpeed = 3f; // Speed at which tiles descend
+    public float riseSpeed = 3f; // Speed at which tiles rise back
     public float descendDelay = 1f; // Delay after descending
     public float riseDelay = 1f; // Delay after rising
+    public float thresholdY = -0.7f; // Threshold y-coordinate for triggering endgame
 
     private Vector3[] initialPositions; // Array to hold initial positions of tiles
+	public UIManager uiManager;
 
     void Start()
     {
@@ -36,6 +37,9 @@ public class TileTrapController : MonoBehaviour
                 yield return StartCoroutine(MoveTile(tiles[i], targetPosition));
             }
 
+            // Check for objects below the threshold
+            CheckForObjectsBelowThreshold();
+
             // Wait for descendDelay seconds
             yield return new WaitForSeconds(descendDelay);
 
@@ -56,6 +60,19 @@ public class TileTrapController : MonoBehaviour
         {
             tile.position = Vector3.MoveTowards(tile.position, targetPosition, descendSpeed * Time.deltaTime);
             yield return null;
+        }
+    }
+
+    void CheckForObjectsBelowThreshold()
+    {
+        GameObject[] playerAndKeyObjects = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject obj in playerAndKeyObjects)
+        {
+            if (obj.transform.position.y < thresholdY)
+            {
+                uiManager.ShowCanvas();
+                return;
+            }
         }
     }
 }
